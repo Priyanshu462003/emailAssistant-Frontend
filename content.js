@@ -1,6 +1,6 @@
 console.log("Email Assistant Loaded");
 
-const BASE_URL = 'https://email-assistant-backend-production-3f61.up.railway.app';
+const BASE_URL = 'https://email-assistant-backend-production-3f61.up.railway.app/api/email';
 
 // ─── Get Email Content ─────────────────────────────────────────
 function getEmailContent() {
