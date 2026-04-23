@@ -1,10 +1,11 @@
-chrome.identity.onSignInChanged.addListener(() => {});
+console.log("Email Assistant Background Ready");
 
-async function getAccessToken() {
+// ─── Get Google OAuth Token ────────────────────────────────────
+function getAccessToken() {
     return new Promise((resolve, reject) => {
         chrome.identity.getAuthToken({ interactive: true }, (token) => {
-            if (chrome.runtime.lastError) {
-                reject(chrome.runtime.lastError.message);
+            if (chrome.runtime.lastError || !token) {
+                reject(chrome.runtime.lastError?.message || 'No token');
             } else {
                 resolve(token);
             }
@@ -12,15 +13,12 @@ async function getAccessToken() {
     });
 }
 
+// ─── Listen for messages from content.js ──────────────────────
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === 'GET_ACCESS_TOKEN') {
         getAccessToken()
-            .then(token => {
-                sendResponse({ token: token });
-            })
-            .catch(err => {
-                sendResponse({ error: err });
-            });
-        return true; // ← CRITICAL — keeps message channel open for async
+            .then(token => sendResponse({ token }))
+            .catch(err => sendResponse({ error: err }));
+        return true; // keeps the message channel open for async
     }
 });
