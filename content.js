@@ -1,6 +1,6 @@
 console.log("Email Assistant Loaded");
 
-const BASE_URL = 'http://localhost:8080/email';
+const BASE_URL = 'https://email-assistant-backend-production-3f61.up.railway.app';
 
 // ─── Get Email Content ─────────────────────────────────────────
 function getEmailContent() {
@@ -34,14 +34,14 @@ function createSidebar() {
     sidebar.id = 'ai-email-sidebar';
     sidebar.innerHTML = `
         <div class="ai-sidebar-header">
-            <h2>🤖 Email Assistant</h2>
+            <h2>Email Assistant</h2>
             <button id="ai-close-btn">✕</button>
         </div>
         <div class="ai-sidebar-buttons">
-            <button class="ai-feature-btn" id="btn-reply">✍️ Generate Reply</button>
-            <button class="ai-feature-btn" id="btn-summarize">📝 Summarize</button>
-            <button class="ai-feature-btn" id="btn-analyze-thread">🔍 Analyze Thread</button>
-            <button class="ai-feature-btn" id="btn-detect-meeting">📅 Detect Meeting</button>
+            <button class="ai-feature-btn" id="btn-reply">Generate Reply</button>
+            <button class="ai-feature-btn" id="btn-summarize">Summarize</button>
+            <button class="ai-feature-btn" id="btn-analyze-thread">Analyze Thread</button>
+            <button class="ai-feature-btn" id="btn-detect-meeting">Detect Meeting</button>
         </div>
         <div id="ai-result" class="ai-sidebar-result">
             <p class="ai-placeholder">Select a feature to get started...</p>
@@ -72,7 +72,7 @@ function showResult(html) {
 }
 
 function showError(message) {
-    document.getElementById('ai-result').innerHTML = `<p class="ai-error">❌ ${message}</p>`;
+    document.getElementById('ai-result').innerHTML = `<p class="ai-error">${message}</p>`;
 }
 
 function insertReply(text) {
@@ -88,7 +88,7 @@ function insertReply(text) {
 // ─── Feature 1 — Generate Reply ────────────────────────────────
 function handleReply() {
     showResult(`
-        <h3>✍️ Generate Reply</h3>
+        <h3>Generate Reply</h3>
         <select id="reply-tone" class="ai-select">
             <option value="professional">Professional</option>
             <option value="friendly">Friendly</option>
@@ -126,7 +126,7 @@ function handleReply() {
             });
             const text = await response.text();
             showResult(`
-                <h3>✍️ Generated Reply</h3>
+                <h3>Generated Reply</h3>
                 <div class="ai-reply-box">${text}</div>
                 <button class="ai-use-btn" id="btn-use-reply">Use This Reply</button>
             `);
@@ -150,9 +150,9 @@ async function handleSummarize() {
         });
         const data = await response.json();
         showResult(`
-            <h3>📝 Summary</h3>
+            <h3>Summary</h3>
             <p>${data.summary}</p>
-            <h3>✅ Action Items</h3>
+            <h3>Action Items</h3>
             <ul>${data.action_items.map(item => `<li>${item}</li>`).join('')}</ul>
             <p><b>Priority:</b> <span class="ai-priority-${data.priority}">${data.priority}</span></p>
             <p><b>Deadline Mentioned:</b> ${data.deadline_mentioned}</p>
@@ -216,13 +216,13 @@ async function handleDetectMeeting() {
         }
 
         showResult(`
-            <h3>📅 Meeting Detected!</h3>
+            <h3>Meeting Detected!</h3>
             <p><b>Date:</b> ${data.meeting_date}</p>
             <p><b>Time:</b> ${data.meeting_time}</p>
             <p><b>Agenda:</b> ${data.agenda}</p>
             <p><b>Participants:</b> ${data.participants.join(', ')}</p>
             <p><b>Reminder:</b> ${data.reminder_suggestion}</p>
-            <p class="ai-success">✅ Added to Google Calendar!</p>
+            <p class="ai-success">Added to Google Calendar!</p>
         `);
     } catch (error) {
         showError('Failed to detect meeting');

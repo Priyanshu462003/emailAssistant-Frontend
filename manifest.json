@@ -10,13 +10,13 @@
         "notifications"
     ],
     "oauth2": {
-        "client_id": "307538430828-ikofb96o0fut9rpprjvdom8b7qdbnb8l.apps.googleusercontent.com",
+        "client_id": "307538430828-kd5qkkusmn113m9eadq3h67vnnv5sd32.apps.googleusercontent.com",
         "scopes": [
             "https://www.googleapis.com/auth/calendar.events"
         ]
     },
     "host_permissions": [
-        "http://localhost:8080/*",
+       "https://email-assistant-backend-production-3f61.up.railway.app/*",
         "*://mail.google.com/*"
     ],
     "content_scripts": [
